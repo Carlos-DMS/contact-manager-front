@@ -1,0 +1,82 @@
+<div style="max-height: 55vh; overflow-y: auto" class="border border-3">
+  <table class="table mt-3 text-center">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Nome</th>
+        <th scope="col">CEP</th>
+        <th scope="col">Endereço</th>
+        <th scope="col">Cidade</th>
+        <th scope="col">UF</th>
+        <th scope="col" colspan="2">Ações</th>
+        <th scope="col">Contatos</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let pessoa of pessoas">
+        <tr>
+          <td>{{ pessoa.id }}</td>
+          <td>{{ pessoa.nome }}</td>
+          <td>{{ pessoa.cep }}</td>
+          <td>{{ pessoa.endereco }}</td>
+          <td>{{ pessoa.cidade }}</td>
+          <td>{{ pessoa.uf }}</td>
+          <td>
+            <button class="btn btn-primary btn-sm me-1">
+              <i class="fa fa-pencil" aria-hidden="true"></i>
+            </button>
+          </td>
+          <td>
+            <button class="btn btn-danger btn-sm">
+              <i class="fa fa-trash" aria-hidden="true"></i>
+            </button>
+          </td>
+          <td>
+            <a (click)="buscarContatosPorIDPessoa(pessoa, pessoa.id)"
+               class="text-decoration-none"
+               data-bs-toggle="collapse"
+               [attr.href]="'#collapseContatos' + pessoa.id"
+               role="button"
+               [attr.aria-expanded]="false"
+               [attr.aria-controls]="'collapseContatos' + pessoa.id">
+              Contatos <span>&#9660;</span>
+            </a>
+          </td>
+        </tr>
+        <tr class="collapse" [id]="'collapseContatos' + pessoa.id">
+          <td colspan="9" class="p-0">
+            <div class="m-3">
+              <table class="table table-sm table-hover">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Tipo</th>
+                    <th>Contato</th>
+                    <th colspan="2">Ações</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let contato of pessoa.contatos">
+                    <td>{{ contato.id }}</td>
+                    <td>{{ contato.tipoContato }}</td>
+                    <td>{{ contato.contato }}</td>
+                    <td>
+                      <button class="btn btn-primary btn-sm me-1">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                      </button>
+                    </td>
+                    <td>
+                      <button class="btn btn-danger btn-sm">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</div>
