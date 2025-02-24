@@ -6,7 +6,7 @@ import { ContatoService } from 'src/app/services/contato.service';
 @Component({
   selector: 'app-table-pessoas-contatos',
   templateUrl: './table-pessoas-contatos.component.html',
-  styleUrls: ['./table-pessoas-contatos.component.scss']
+  styleUrls: ['./table-pessoas-contatos.component.scss'],
 })
 export class TablePessoasContatosComponent {
   @Input()
@@ -15,13 +15,16 @@ export class TablePessoasContatosComponent {
   constructor(private contatoService: ContatoService) {}
 
   buscarContatosPorIDPessoa(pessoa: IPessoa, idPessoa: number) {
-    this.contatoService.buscarTodosContatosPorPessoaID(idPessoa).subscribe({
+    if (!pessoa.contatosCarregados) {
+      this.contatoService.buscarTodosContatosPorPessoaID(idPessoa).subscribe({
         next: (response: IContato[]) => {
           pessoa.contatos = response;
+          pessoa.contatosCarregados = true;
         },
         error: (error) => {
           console.error(error.message);
-        }
-    })
+        },
+      });
+    }
   }
 }

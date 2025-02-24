@@ -14,5 +14,5 @@ export class ContatoService {
 
   buscarTodosContatosPorPessoaID(idPessoa: number) {
       return this.http.get<IContato[]>(`${this.url}/contatos/pessoa/${idPessoa}`)
-    }
+  }
 }

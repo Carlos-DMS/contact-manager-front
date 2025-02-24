@@ -8,4 +8,5 @@ export interface IPessoa {
   cidade?: string;
   uf?: string;
   contatos?: IContato[];
+  contatosCarregados?: boolean;
 }
