@@ -27,4 +27,8 @@ export class PessoaService {
   editarPessoaPorID(id: number, pessoa: IPessoa) {
     return this.http.put<void>(`${this.url}/pessoas/${id}`, pessoa)
   }
+
+  deletarPessoaPorID(id: number) {
+    return this.http.delete<void>(`${this.url}/pessoas/${id}`)
+  }
 }

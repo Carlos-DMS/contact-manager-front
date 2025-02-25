@@ -1,7 +1,11 @@
-<app-navbar />
+<div class="d-flex flex-wrap" style="height: 90vh;">
+  <app-navbar class="col-12" />
 
-<div class="container mt-3">
-  <router-outlet></router-outlet>
+  <div class="container">
+    <div class="align-items-center">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+
+  <app-footer></app-footer>
 </div>
-
-<app-footer></app-footer>

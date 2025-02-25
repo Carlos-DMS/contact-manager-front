@@ -3,6 +3,7 @@ import { PessoaService } from './../../services/pessoa.service';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-cadastrar-editar-pessoa',
@@ -32,33 +33,9 @@ export class CadastrarEditarPessoaComponent {
   });
 
   estadosBrasileiros: string[] = [
-    'AC',
-    'AL',
-    'AP',
-    'AM',
-    'BA',
-    'CE',
-    'DF',
-    'ES',
-    'GO',
-    'MA',
-    'MT',
-    'MS',
-    'MG',
-    'PA',
-    'PB',
-    'PR',
-    'PE',
-    'PI',
-    'RJ',
-    'RN',
-    'RS',
-    'RO',
-    'RR',
-    'SC',
-    'SP',
-    'SE',
-    'TO',
+    'AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS',
+    'MG', 'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC',
+    'SP', 'SE', 'TO'
   ];
 
   constructor(
@@ -78,7 +55,6 @@ export class CadastrarEditarPessoaComponent {
     this.pessoaService.buscarPessoaPorID(this.id).subscribe({
       next: (response: IPessoa) => {
         this.pessoa = response;
-
         this.carregarDadosEdicao();
       },
       error: (error) => {
@@ -103,8 +79,19 @@ export class CadastrarEditarPessoaComponent {
     const pessoa = this.sanitizarDadosFormulario();
 
     this.pessoaService.cadastrarPessoa(pessoa).subscribe({
-      next: () => this.router.navigate(['/listar-pessoas']),
-      error: (error) => console.error(error.message),
+      next: () => {
+        Swal.fire({
+          title: 'Cadastrado!',
+          text: 'Pessoa cadastrada com sucesso!',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this.router.navigate(['/listar-pessoas']);
+          }
+        });
+      },
+      error: (error) => this.mostrarErros(error)
     });
   }
 
@@ -113,11 +100,59 @@ export class CadastrarEditarPessoaComponent {
 
     const pessoa = this.sanitizarDadosFormulario();
 
-    console.log(pessoa);
+    Swal.fire({
+      title: 'Salvar alterações?',
+      text: "Você deseja salvar as modificações feitas?",
+      icon: 'question',
+      showDenyButton: true,
+      confirmButtonText: 'Salvar',
+      denyButtonText: 'Descartar',
+      confirmButtonColor: '#3085d6',
+      denyButtonColor: '#d33'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.pessoaService.editarPessoaPorID(this.id!, pessoa).subscribe({
+          next: () => {
+            Swal.fire({
+              title: 'Salvo!',
+              text: 'Alterações salvas com sucesso!',
+              icon: 'success',
+              confirmButtonText: 'OK'
+            }).then(() => this.router.navigate(['/listar-pessoas']));
+          },
+          error: (error) => this.mostrarErros(error)
+        });
+      } else if (result.isDenied) {
+        Swal.fire({
+          title: 'Alterações descartadas',
+          text: 'As mudanças não foram salvas.',
+          icon: 'info',
+          confirmButtonText: 'OK'
+        }).then(() => this.router.navigate(['/listar-pessoas']));
+      }
+    });
+  }
 
-    this.pessoaService.editarPessoaPorID(this.id, pessoa).subscribe({
-      next: () => this.router.navigate(['/listar-pessoas']),
-      error: (error) => console.error(error.message),
+  private mostrarErros(error: any) {
+    const erros = error.error;
+    let mensagensDeErro: string[] = [];
+
+
+    if (typeof erros === 'string') {
+      mensagensDeErro.push(erros);
+    }
+    else if (typeof erros === 'object' && erros !== null) {
+      mensagensDeErro = Object.values(erros);
+    }
+    else {
+      mensagensDeErro.push('Erro ao processar a requisição.');
+    }
+
+    Swal.fire({
+      title: 'Erro!',
+      html: mensagensDeErro.join('<br><br>'),
+      icon: 'error',
+      confirmButtonText: 'OK'
     });
   }
 
