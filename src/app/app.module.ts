@@ -8,6 +8,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { ListarPessoasComponent } from './pages/listar-pessoas/listar-pessoas.component';
 import { TablePessoasContatosComponent } from './components/table-pessoas-contatos/table-pessoas-contatos.component';
+import { CadastrarEditarPessoaComponent } from './pages/cadastrar-editar-pessoa/cadastrar-editar-pessoa.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -15,11 +17,13 @@ import { TablePessoasContatosComponent } from './components/table-pessoas-contat
     NavbarComponent,
     FooterComponent,
     ListarPessoasComponent,
-    TablePessoasContatosComponent
+    TablePessoasContatosComponent,
+    CadastrarEditarPessoaComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    ReactiveFormsModule,
     HttpClientModule
   ],
   providers: [],

@@ -1,0 +1,150 @@
+<form
+  [formGroup]="formGroupPessoa"
+  (submit)="id ? editarPessoa() : cadastrarPessoa()"
+  class="bg-body-secondary rounded-3 p-3"
+>
+  <div class="row g-3">
+    <!-- nome -->
+    <div>
+      <label class="form-label fw-bold">Nome</label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="nome"
+        placeholder="Ex: João Silva"
+        [class.is-invalid]="
+          formGroupPessoa.get('nome')?.invalid &&
+          formGroupPessoa.get('nome')?.touched
+        "
+      />
+      <div
+        *ngIf="
+          formGroupPessoa.get('nome')?.invalid &&
+          formGroupPessoa.get('nome')?.touched
+        "
+        class="invalid-feedback"
+      >
+        <span *ngIf="formGroupPessoa.get('nome')?.hasError('required')"
+          >Campo obrigatório</span
+        >
+        <span *ngIf="formGroupPessoa.get('nome')?.hasError('minlength')"
+          >Mínimo 2 caracteres</span
+        >
+        <span *ngIf="formGroupPessoa.get('nome')?.hasError('maxlength')"
+          >Máximo 100 caracteres</span
+        >
+      </div>
+    </div>
+
+    <!-- CEP -->
+    <div class="col-md-6">
+      <label class="form-label fw-bold">CEP</label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="cep"
+        placeholder="00000000"
+        [class.is-invalid]="
+          formGroupPessoa.get('cep')?.invalid &&
+          formGroupPessoa.get('cep')?.touched
+        "
+      />
+      <div
+        *ngIf="
+          formGroupPessoa.get('cep')?.invalid &&
+          formGroupPessoa.get('cep')?.touched
+        "
+        class="invalid-feedback"
+      >
+        Formato inválido (8 dígitos)
+      </div>
+    </div>
+
+    <!-- UF -->
+    <div class="col-md-6">
+      <label class="form-label fw-bold">UF</label>
+      <select
+        class="form-select"
+        formControlName="uf"
+        [class.is-invalid]="
+          formGroupPessoa.get('uf')?.invalid &&
+          formGroupPessoa.get('uf')?.touched
+        "
+      >
+        <option [ngValue]="null" selected>-</option>
+        <option *ngFor="let uf of estadosBrasileiros" [value]="uf">
+          {{ uf }}
+        </option>
+      </select>
+    </div>
+
+    <!-- endereço -->
+    <div>
+      <label class="form-label fw-bold">Endereço</label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="endereco"
+        placeholder="Ex: Avenida Paulista, 123"
+        [class.is-invalid]="
+          formGroupPessoa.get('endereco')?.invalid &&
+          formGroupPessoa.get('endereco')?.touched
+        "
+      />
+      <div
+        *ngIf="
+          formGroupPessoa.get('endereco')?.invalid &&
+          formGroupPessoa.get('endereco')?.touched
+        "
+        class="invalid-feedback"
+      >
+        <span *ngIf="formGroupPessoa.get('endereco')?.hasError('minlength')"
+          >Mínimo 3 caracteres</span
+        >
+        <span *ngIf="formGroupPessoa.get('endereco')?.hasError('maxlength')"
+          >Máximo 150 caracteres</span
+        >
+      </div>
+    </div>
+
+    <!-- cidade -->
+    <div>
+      <label class="form-label fw-bold">Cidade</label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="cidade"
+        placeholder="Ex: São Paulo"
+        [class.is-invalid]="
+          formGroupPessoa.get('cidade')?.invalid &&
+          formGroupPessoa.get('cidade')?.touched
+        "
+      />
+      <div
+        *ngIf="
+          formGroupPessoa.get('cidade')?.invalid &&
+          formGroupPessoa.get('cidade')?.touched
+        "
+        class="invalid-feedback"
+      >
+        <span *ngIf="formGroupPessoa.get('cidade')?.hasError('minlength')"
+          >Mínimo 3 caracteres</span
+        >
+        <span *ngIf="formGroupPessoa.get('cidade')?.hasError('maxlength')"
+          >Máximo 100 caracteres</span
+        >
+      </div>
+    </div>
+
+    <!-- botão -->
+    <div class="mt-4">
+      <button
+        type="submit"
+        class="btn btn-primary mx-auto w-100 py-2"
+        [disabled]="!formGroupPessoa.valid"
+      >
+        {{ id ? "Editar" : "Cadastrar" }}
+      </button>
+    </div>
+  </div>
+</form>

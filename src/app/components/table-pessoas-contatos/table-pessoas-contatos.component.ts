@@ -12,7 +12,14 @@ export class TablePessoasContatosComponent {
   @Input()
   pessoas: IPessoa[] = [];
 
-  constructor(private contatoService: ContatoService) {}
+  constructor(private readonly contatoService: ContatoService) {}
+
+  formatarCep(cep: string | undefined) {
+    if (cep) {
+      return cep.replace(/(\d{5})(\d{3})/, '$1-$2');
+    }
+    return null;
+  }
 
   buscarContatosPorIDPessoa(pessoa: IPessoa, idPessoa: number) {
     if (!pessoa.contatosCarregados) {

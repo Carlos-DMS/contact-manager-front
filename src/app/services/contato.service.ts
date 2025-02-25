@@ -10,7 +10,7 @@ import { IContato } from '../interfaces/icontato';
 export class ContatoService {
   url = environment.url;
 
-  constructor(private http: HttpClient) { }
+  constructor(private readonly http: HttpClient) { }
 
   buscarTodosContatosPorPessoaID(idPessoa: number) {
       return this.http.get<IContato[]>(`${this.url}/contatos/pessoa/${idPessoa}`)

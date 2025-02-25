@@ -1,4 +1,5 @@
 <div style="height: 55vh; overflow-y: auto" class="border border-3">
+  <!-- pessoas -->
   <table class="table text-center">
     <thead>
       <tr>
@@ -17,12 +18,15 @@
         <tr>
           <td>{{ pessoa.id }}</td>
           <td>{{ pessoa.nome }}</td>
-          <td>{{ pessoa.cep }}</td>
+          <td>{{ formatarCep(pessoa.cep) }}</td>
           <td>{{ pessoa.endereco }}</td>
           <td>{{ pessoa.cidade }}</td>
           <td>{{ pessoa.uf }}</td>
           <td>
-            <button class="btn btn-primary btn-sm me-1">
+            <button
+              class="btn btn-primary btn-sm me-1"
+              [routerLink]="['/editar-pessoa/', pessoa.id]"
+            >
               <i class="fa fa-pencil" aria-hidden="true"></i>
             </button>
           </td>
@@ -32,13 +36,15 @@
             </button>
           </td>
           <td>
-            <a (click)="buscarContatosPorIDPessoa(pessoa, pessoa.id)"
-               class="text-decoration-none"
-               data-bs-toggle="collapse"
-               [attr.href]="'#collapseContatos' + pessoa.id"
-               role="button"
-               [attr.aria-expanded]="false"
-               [attr.aria-controls]="'collapseContatos' + pessoa.id">
+            <a
+              (click)="buscarContatosPorIDPessoa(pessoa, pessoa.id)"
+              class="text-decoration-none"
+              data-bs-toggle="collapse"
+              [attr.href]="'#collapseContatos' + pessoa.id"
+              role="button"
+              [attr.aria-expanded]="false"
+              [attr.aria-controls]="'collapseContatos' + pessoa.id"
+            >
               Contatos <span>&#9660;</span>
             </a>
           </td>
@@ -46,7 +52,8 @@
         <tr class="collapse" [id]="'collapseContatos' + pessoa.id">
           <td colspan="9" class="p-0">
             <div class="m-3">
-              <table class="table table-sm">
+              <!-- contatos da pessoa -->
+              <table class="table table-sm table-hover">
                 <thead>
                   <tr>
                     <th>ID</th>
