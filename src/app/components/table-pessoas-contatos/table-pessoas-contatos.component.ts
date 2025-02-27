@@ -46,8 +46,8 @@ export class TablePessoasContatosComponent {
       text: 'Esta ação não poderá ser desfeita!',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#808080',
       confirmButtonText: 'Excluir',
       cancelButtonText: 'Cancelar'
     }).then((result) => {
@@ -56,6 +56,7 @@ export class TablePessoasContatosComponent {
           next: () => {
             Swal.fire({
               title: 'Excluído!',
+              confirmButtonColor: '#3085d6',
               text: 'Pessoa excluída com sucesso!',
               icon: 'success'
             });
@@ -65,7 +66,7 @@ export class TablePessoasContatosComponent {
           error: (error) => {
             Swal.fire({
               title: 'Erro!',
-              text: error.error || 'Falha ao excluir o registro.', // Assume que o erro é uma string
+              text: error.error || 'Falha ao excluir o registro.',
               icon: 'error',
               confirmButtonText: 'OK'
             });

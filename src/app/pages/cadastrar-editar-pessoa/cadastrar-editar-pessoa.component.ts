@@ -84,6 +84,7 @@ export class CadastrarEditarPessoaComponent {
           title: 'Cadastrado!',
           text: 'Pessoa cadastrada com sucesso!',
           icon: 'success',
+          confirmButtonColor: '#3085d6',
           confirmButtonText: 'OK'
         }).then((result) => {
           if (result.isConfirmed) {
@@ -117,6 +118,7 @@ export class CadastrarEditarPessoaComponent {
               title: 'Salvo!',
               text: 'Alterações salvas com sucesso!',
               icon: 'success',
+              confirmButtonColor: '#3085d6',
               confirmButtonText: 'OK'
             }).then(() => this.router.navigate(['/listar-pessoas']));
           },
@@ -127,6 +129,7 @@ export class CadastrarEditarPessoaComponent {
           title: 'Alterações descartadas',
           text: 'As mudanças não foram salvas.',
           icon: 'info',
+          confirmButtonColor: '#3085d6',
           confirmButtonText: 'OK'
         }).then(() => this.router.navigate(['/listar-pessoas']));
       }
@@ -136,7 +139,6 @@ export class CadastrarEditarPessoaComponent {
   private mostrarErros(error: any) {
     const erros = error.error;
     let mensagensDeErro: string[] = [];
-
 
     if (typeof erros === 'string') {
       mensagensDeErro.push(erros);
