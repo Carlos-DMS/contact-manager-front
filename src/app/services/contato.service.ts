@@ -13,6 +13,6 @@ export class ContatoService {
   constructor(private readonly http: HttpClient) { }
 
   buscarTodosContatosPorPessoaID(idPessoa: number) {
-      return this.http.get<IContato[]>(`${this.url}/contatos/pessoa/${idPessoa}`)
+      return this.http.get<IContato[]>(`${this.url}/contatos/pessoa/${idPessoa}`);
   }
 }

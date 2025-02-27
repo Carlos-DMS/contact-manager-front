@@ -4,6 +4,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { IEndereco } from 'src/app/interfaces/iendereco';
 
 @Component({
   selector: 'app-cadastrar-editar-pessoa',
@@ -97,7 +98,9 @@ export class CadastrarEditarPessoaComponent {
   }
 
   editarPessoa() {
-    if (!this.id) return;
+    if (!this.id) {
+      return;
+    }
 
     const pessoa = this.sanitizarDadosFormulario();
 
@@ -136,6 +139,34 @@ export class CadastrarEditarPessoaComponent {
     });
   }
 
+  buscarEnderecoViaCEP() {
+    const cepControl = this.formGroupPessoa.get('cep');
+
+    if (cepControl?.valid) {
+      const cep = cepControl.value;
+
+      const enderecoViaCEP = this.pessoaService.buscarEnderecoViaCEP(cep).subscribe({
+        next: (endereco: IEndereco) => {
+          if (endereco.erro) {
+            cepControl?.setErrors({ invalidCep: true });
+            this.erroCEP();
+            return;
+          }
+
+          this.formGroupPessoa.patchValue({
+            endereco: endereco.logradouro || '',
+            cidade: endereco.localidade || '',
+            uf: endereco.uf || ''
+          });
+        },
+        error: (error) => {
+          this.erroCEP();
+          return;
+        }
+      })
+    }
+  }
+
   private mostrarErros(error: any) {
     const erros = error.error;
     let mensagensDeErro: string[] = [];
@@ -156,6 +187,18 @@ export class CadastrarEditarPessoaComponent {
       icon: 'error',
       confirmButtonText: 'OK'
     });
+  }
+
+  private erroCEP() {
+    Swal.fire({
+      title: 'Erro!',
+      text: 'O CEP informado é inválido.',
+      icon: 'warning',
+      confirmButtonColor: '#3085d6',
+      confirmButtonText: 'OK'
+    })
+
+
   }
 
   private sanitizarDadosFormulario(): IPessoa {
