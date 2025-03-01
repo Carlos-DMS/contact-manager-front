@@ -9,7 +9,7 @@
         <th scope="col">Endereço</th>
         <th scope="col">Cidade</th>
         <th scope="col">UF</th>
-        <th scope="col" colspan="2">Ações</th>
+        <th scope="col" colspan="3">Ações</th>
         <th scope="col">Contatos</th>
       </tr>
     </thead>
@@ -24,10 +24,19 @@
           <td>{{ pessoa.uf }}</td>
           <td>
             <button
-              class="btn btn-primary btn-sm me-1"
+              class="btn btn-primary btn-sm"
               [routerLink]="['/editar-pessoa/', pessoa.id]"
             >
               <i class="fa fa-pencil" aria-hidden="true"></i>
+            </button>
+          </td>
+          <td>
+            <button
+              class="btn btn-primary btn-sm"
+              (click)="abrirCadastrarContatoComID(pessoa.id)"
+            >
+              <i class="fa fa-phone" aria-hidden="true"></i>
+              <i class="fa fa-plus" aria-hidden="true"></i>
             </button>
           </td>
           <td>
@@ -53,10 +62,10 @@
           </td>
         </tr>
         <tr class="collapse" [id]="'collapseContatos' + pessoa.id">
-          <td colspan="9" class="p-0">
+          <td colspan="10" class="p-0">
             <div class="m-3">
               <!-- contatos da pessoa -->
-              <table class="table table-sm table-hover">
+              <table class="table table-sm">
                 <thead>
                   <tr>
                     <th>ID</th>
@@ -71,12 +80,17 @@
                     <td>{{ contato.tipoContato }}</td>
                     <td>{{ contato.contato }}</td>
                     <td>
-                      <button class="btn btn-primary btn-sm me-1">
+                      <button
+                        class="btn btn-primary btn-sm"
+                        [routerLink]="['/editar-contato/', contato.id]"
+                      >
                         <i class="fa fa-pencil" aria-hidden="true"></i>
                       </button>
                     </td>
                     <td>
-                      <button class="btn btn-danger btn-sm">
+                      <button
+                      class="btn btn-danger btn-sm"
+                      (click)="deletarContato(contato.id, pessoa.id)">
                         <i class="fa fa-trash" aria-hidden="true"></i>
                       </button>
                     </td>

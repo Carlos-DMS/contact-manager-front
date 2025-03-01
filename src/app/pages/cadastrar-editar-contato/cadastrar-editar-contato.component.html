@@ -1,0 +1,80 @@
+<form
+  [formGroup]="formGroupContato"
+  (submit)="id ? editarContato() : cadastrarContato()"
+  class="bg-body-secondary rounded-3 p-3"
+>
+  <div class="row g-3">
+
+    <!-- tipo contato-->
+    <div>
+      <label class="form-label fw-bold">Tipo de contato</label>
+      <select
+        class="form-select"
+        formControlName="tipoContato"
+        [class.is-invalid]="
+          formGroupContato.get('tipoContato')?.invalid &&
+          formGroupContato.get('tipoContato')?.touched
+        "
+      >
+        <option [ngValue]="null" selected></option>
+        <option *ngFor="let tipoContatoOption of tiposContato" [value]="tipoContatoOption">
+          {{ tipoContatoOption }}
+        </option>
+      </select>
+      <div
+        *ngIf="
+          formGroupContato.get('tipoContato')?.invalid &&
+          formGroupContato.get('tipoContato')?.touched
+        "
+        class="invalid-feedback"
+      >
+        <span *ngIf="formGroupContato.get('tipoContato')?.hasError('required')"
+          >Campo obrigatório</span
+        >
+      </div>
+    </div>
+
+    <!-- contato -->
+    <div>
+      <label class="form-label fw-bold">Contato</label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="contato"
+        placeholder="Ex: seuemail@email.com"
+        [class.is-invalid]="
+          formGroupContato.get('contato')?.invalid &&
+          formGroupContato.get('contato')?.touched
+        "
+      />
+      <div
+        *ngIf="
+          formGroupContato.get('contato')?.invalid &&
+          formGroupContato.get('contato')?.touched
+        "
+        class="invalid-feedback"
+      >
+        <span *ngIf="formGroupContato.get('contato')?.hasError('required')"
+          >Campo obrigatório</span
+        >
+        <span *ngIf="formGroupContato.get('contato')?.hasError('minlength')"
+          >Mínimo 2 caracteres</span
+        >
+        <span *ngIf="formGroupContato.get('contato')?.hasError('maxlength')"
+          >Máximo 100 caracteres</span
+        >
+      </div>
+    </div>
+
+    <!-- botão -->
+    <div class="mt-4">
+      <button
+        type="submit"
+        class="btn btn-primary mx-auto w-100 py-2"
+        [disabled]="!formGroupContato.valid"
+      >
+        {{ id ? "Editar" : "Cadastrar" }}
+      </button>
+    </div>
+  </div>
+</form>

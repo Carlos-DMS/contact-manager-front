@@ -48,20 +48,17 @@ export class CadastrarEditarPessoaComponent {
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];
 
-    if (this.id === undefined) {
-      console.error('ID não definido. Não é possível buscar a pessoa.');
-      return;
+    if (this.id !== undefined) {
+      this.pessoaService.buscarPessoaPorID(this.id).subscribe({
+        next: (response: IPessoa) => {
+          this.pessoa = response;
+          this.carregarDadosEdicao();
+        },
+        error: (error) => {
+          console.error(error.message);
+        },
+      });
     }
-
-    this.pessoaService.buscarPessoaPorID(this.id).subscribe({
-      next: (response: IPessoa) => {
-        this.pessoa = response;
-        this.carregarDadosEdicao();
-      },
-      error: (error) => {
-        console.error(error.message);
-      },
-    });
   }
 
   carregarDadosEdicao() {

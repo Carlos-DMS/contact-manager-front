@@ -10,6 +10,7 @@ import { ListarPessoasComponent } from './pages/listar-pessoas/listar-pessoas.co
 import { TablePessoasContatosComponent } from './components/table-pessoas-contatos/table-pessoas-contatos.component';
 import { CadastrarEditarPessoaComponent } from './pages/cadastrar-editar-pessoa/cadastrar-editar-pessoa.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CadastrarEditarContatoComponent } from './pages/cadastrar-editar-contato/cadastrar-editar-contato.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     FooterComponent,
     ListarPessoasComponent,
     TablePessoasContatosComponent,
-    CadastrarEditarPessoaComponent
+    CadastrarEditarPessoaComponent,
+    CadastrarEditarContatoComponent
   ],
   imports: [
     BrowserModule,
