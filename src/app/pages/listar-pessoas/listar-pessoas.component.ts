@@ -1,7 +1,6 @@
-import { ContatoService } from './../../services/contato.service';
-import { PessoaService } from './../../services/pessoa.service';
 import { Component } from '@angular/core';
-import { IPessoa } from 'src/app/interfaces/ipessoa';
+import { PessoaService } from './../../services/pessoa.service';
+import { IPessoa } from '../../interfaces/ipessoa';
 
 @Component({
   selector: 'app-listar-pessoas',
@@ -10,10 +9,16 @@ import { IPessoa } from 'src/app/interfaces/ipessoa';
 })
 export class ListarPessoasComponent {
   pessoas: IPessoa[] = [];
+  pessoasFiltradas?: IPessoa[];
+  termoBusca = '';
 
   constructor(private pessoaService: PessoaService) {}
 
   ngOnInit() {
+    this.carregarPessoas();
+  }
+
+  private carregarPessoas() {
     this.pessoaService.buscarTodasPessoas().subscribe({
       next: (response: IPessoa[]) => {
         this.pessoas = response;
@@ -21,6 +26,18 @@ export class ListarPessoasComponent {
       error: (error) => {
         console.error(error.message);
       }
-    })
+    });
+  }
+
+  filtrarPessoas() {
+    if (!this.termoBusca.trim()) {
+      this.pessoasFiltradas = undefined;
+      return;
+    }
+
+    const termo = this.termoBusca.toLowerCase();
+    this.pessoasFiltradas = this.pessoas.filter(pessoa =>
+      pessoa.nome.toLowerCase().includes(termo)
+    );
   }
 }

@@ -9,7 +9,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { ListarPessoasComponent } from './pages/listar-pessoas/listar-pessoas.component';
 import { TablePessoasContatosComponent } from './components/table-pessoas-contatos/table-pessoas-contatos.component';
 import { CadastrarEditarPessoaComponent } from './pages/cadastrar-editar-pessoa/cadastrar-editar-pessoa.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CadastrarEditarContatoComponent } from './pages/cadastrar-editar-contato/cadastrar-editar-contato.component';
 import { HomeComponent } from './pages/home/home.component';
 
@@ -28,7 +28,8 @@ import { HomeComponent } from './pages/home/home.component';
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

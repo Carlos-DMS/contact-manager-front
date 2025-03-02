@@ -67,6 +67,7 @@ export const environment = {
 
 - **Gestão de Pessoas:**
     - Listagem de pessoas
+    - Busca de pessoas pelo nome
     - Cadastro (integração com ViaCEP para autocompletar e validar endereços)
     - Edição (integração com ViaCEP para autocompletar e validar endereços)
     - Exclusão
