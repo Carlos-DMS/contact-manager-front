@@ -77,10 +77,10 @@ export const environment = {
     - Edição
     - Exclusão
 
-  - **Informações adicionais**
-      - Alertas interativos com SweetAlert2
-      - Exibição clara de erros retornados pela API
-      - Prevenção de operações inválidas
+- **Informações adicionais**
+    - Alertas interativos com SweetAlert2
+    - Exibição clara de erros retornados pela API
+    - Prevenção de operações inválidas
 
 ---
 
