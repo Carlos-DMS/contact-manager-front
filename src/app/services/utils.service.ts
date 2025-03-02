@@ -24,7 +24,8 @@ export class UtilsService {
       title: 'Erro!',
       html: mensagensDeErro.join('<br><br>'),
       icon: 'error',
-      confirmButtonText: 'OK',
+      confirmButtonColor: '#3085d6',
+      confirmButtonText: 'OK'
     });
   }
 }
