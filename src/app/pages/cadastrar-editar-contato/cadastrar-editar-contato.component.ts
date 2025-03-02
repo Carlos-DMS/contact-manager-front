@@ -1,3 +1,4 @@
+import { UtilsService } from './../../services/utils.service';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -38,6 +39,7 @@ export class CadastrarEditarContatoComponent {
 
   constructor(
     private readonly contatoService: ContatoService,
+    private readonly utilsService: UtilsService,
     private readonly route: ActivatedRoute,
     private readonly router: Router
   ) {}
@@ -87,7 +89,7 @@ export class CadastrarEditarContatoComponent {
           }
         });
       },
-      error: (error) => this.mostrarErros(error),
+      error: (error) => this.utilsService.mostrarErros(error),
     });
   }
 
@@ -119,7 +121,7 @@ export class CadastrarEditarContatoComponent {
               confirmButtonText: 'OK',
             }).then(() => this.router.navigate(['/listar-pessoas']));
           },
-          error: (error) => this.mostrarErros(error),
+          error: (error) => this.utilsService.mostrarErros(error),
         });
       } else if (result.isDenied) {
         Swal.fire({
@@ -141,25 +143,5 @@ export class CadastrarEditarContatoComponent {
       nome: rawValue.tipoContato || null,
       cep: rawValue.contato || null,
     };
-  }
-
-  private mostrarErros(error: any) {
-    const erros = error.error;
-    let mensagensDeErro: string[] = [];
-
-    if (typeof erros === 'string') {
-      mensagensDeErro.push(erros);
-    } else if (typeof erros === 'object' && erros !== null) {
-      mensagensDeErro = Object.values(erros);
-    } else {
-      mensagensDeErro.push('Erro ao processar a requisição.');
-    }
-
-    Swal.fire({
-      title: 'Erro!',
-      html: mensagensDeErro.join('<br><br>'),
-      icon: 'error',
-      confirmButtonText: 'OK',
-    });
   }
 }

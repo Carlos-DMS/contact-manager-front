@@ -5,6 +5,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { IEndereco } from 'src/app/interfaces/iendereco';
+import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'app-cadastrar-editar-pessoa',
@@ -41,6 +42,7 @@ export class CadastrarEditarPessoaComponent {
 
   constructor(
     private readonly pessoaService: PessoaService,
+    private readonly utilsService: UtilsService,
     private readonly route: ActivatedRoute,
     private readonly router: Router
   ) {}
@@ -90,7 +92,7 @@ export class CadastrarEditarPessoaComponent {
           }
         });
       },
-      error: (error) => this.mostrarErros(error)
+      error: (error) => this.utilsService.mostrarErros(error)
     });
   }
 
@@ -122,7 +124,7 @@ export class CadastrarEditarPessoaComponent {
               confirmButtonText: 'OK'
             }).then(() => this.router.navigate(['/listar-pessoas']));
           },
-          error: (error) => this.mostrarErros(error)
+          error: (error) => this.utilsService.mostrarErros(error)
         });
       } else if (result.isDenied) {
         Swal.fire({
@@ -164,29 +166,6 @@ export class CadastrarEditarPessoaComponent {
     }
   }
 
-  private mostrarErros(error: any) {
-    const erros = error.error;
-    let mensagensDeErro: string[] = [];
-
-    if (typeof erros === 'string') {
-      mensagensDeErro.push(erros);
-    }
-    else if (typeof erros === 'object' && erros !== null) {
-      mensagensDeErro = Object.values(erros);
-    }
-    else {
-      mensagensDeErro.push('Erro ao processar a requisição.');
-    }
-
-    Swal.fire({
-      title: 'Erro!',
-      html: mensagensDeErro.join('<br><br>'),
-      icon: 'error',
-      confirmButtonColor: '#3085d6',
-      confirmButtonText: 'OK'
-    });
-  }
-
   private erroCEP() {
     Swal.fire({
       title: 'Erro!',
@@ -195,8 +174,6 @@ export class CadastrarEditarPessoaComponent {
       confirmButtonColor: '#3085d6',
       confirmButtonText: 'OK'
     })
-
-
   }
 
   private sanitizarDadosFormulario(): IPessoa {
