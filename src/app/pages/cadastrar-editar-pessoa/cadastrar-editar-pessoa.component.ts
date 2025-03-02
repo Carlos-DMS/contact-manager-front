@@ -141,7 +141,7 @@ export class CadastrarEditarPessoaComponent {
   buscarEnderecoViaCEP() {
     const cepControl = this.formGroupPessoa.get('cep');
 
-    if (cepControl?.valid) {
+    if (cepControl?.value?.length === 8 && cepControl?.valid) {
       const cep = cepControl.value;
 
       const enderecoViaCEP = this.pessoaService.buscarEnderecoViaCEP(cep).subscribe({

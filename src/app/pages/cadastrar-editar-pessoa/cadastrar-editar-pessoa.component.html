@@ -37,7 +37,6 @@
     </div>
 
     <!-- CEP -->
-    <!-- A prevenção do uso da tecla enter foi adicionada para evitar erro na atualização das informações pela api via cep, que ocorria quando o submit era acessado via enter. -->
     <div class="col-md-6">
       <label class="form-label fw-bold">CEP</label>
       <input
@@ -45,12 +44,12 @@
         class="form-control"
         formControlName="cep"
         placeholder="12345678"
+        maxlength="8"
         [class.is-invalid]="
           formGroupPessoa.get('cep')?.invalid &&
           formGroupPessoa.get('cep')?.touched
         "
-        (blur)="buscarEnderecoViaCEP()"
-        (keydown.enter)="$event.preventDefault()"
+        (input)="buscarEnderecoViaCEP()"
       />
       <div
         *ngIf="
