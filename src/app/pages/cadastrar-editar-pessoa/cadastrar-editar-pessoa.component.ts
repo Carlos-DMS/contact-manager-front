@@ -182,6 +182,7 @@ export class CadastrarEditarPessoaComponent {
       title: 'Erro!',
       html: mensagensDeErro.join('<br><br>'),
       icon: 'error',
+      confirmButtonColor: '#3085d6',
       confirmButtonText: 'OK'
     });
   }
